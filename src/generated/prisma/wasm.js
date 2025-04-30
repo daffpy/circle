@@ -131,7 +131,8 @@ exports.Prisma.RelationLoadStrategy = {
 
 exports.Prisma.GroupScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  desc: 'desc'
 };
 
 exports.Prisma.UserGroupScalarFieldEnum = {

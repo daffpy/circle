@@ -1,7 +1,9 @@
 "use server"
 
+import prisma from '@/lib/db'
 import { cookies } from 'next/headers'
 import { SignJWT, jwtVerify } from 'jose'
+import { redirect } from 'next/navigation'
 
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)

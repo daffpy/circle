@@ -11,7 +11,6 @@ export async function login(params) {
         }
     })
 
-    console.log(user.id)
     await createSession(user.id)
 
     redirect('/')
@@ -27,6 +26,8 @@ export async function register(params){
             password: params.get("password")
         }
     })
+
+    redirect('/login')
 }
 
 export async function createGroup(params){
@@ -34,6 +35,7 @@ export async function createGroup(params){
         const newGroup = await prisma.group.create({
           data: {
             name: params.get('name'),
+            desc: params.get('desc')
           },
         });
       
@@ -46,4 +48,13 @@ export async function createGroup(params){
       
         return newGroup;
     });
+}
+
+export async function joinGroup(uid,gid){
+  await prisma.userGroup.create({
+    data:{
+      userId: uid,
+      groupId: gid
+    }
+  })
 }

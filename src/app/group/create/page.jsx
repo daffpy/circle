@@ -12,6 +12,10 @@ export default async function CreateGroupPage(){
                 <textarea name="name" placeholder="" style={{resize: "none"}} className=" border p-2 h-10 mt-2 rounded-lg text-sm"></textarea>
             </div>
             <div>
+                <label className="block">Group Description</label>
+                <textarea name="desc" placeholder="" style={{resize: "none"}} className=" border p-2 h-10 mt-2 rounded-lg text-sm"></textarea>
+            </div>
+            <div>
             <label className="block">Owner ID</label>
                 <textarea readOnly={true} name="id" value={data.id} style={{resize: "none", outline: 'none'}} className=" border p-2 h-10 mt-2 rounded-lg text-sm text-gray-400"></textarea>
             </div>

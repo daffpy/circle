@@ -2235,16 +2235,19 @@ export namespace Prisma {
   export type GroupMinAggregateOutputType = {
     id: number | null
     name: string | null
+    desc: string | null
   }
 
   export type GroupMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    desc: string | null
   }
 
   export type GroupCountAggregateOutputType = {
     id: number
     name: number
+    desc: number
     _all: number
   }
 
@@ -2260,16 +2263,19 @@ export namespace Prisma {
   export type GroupMinAggregateInputType = {
     id?: true
     name?: true
+    desc?: true
   }
 
   export type GroupMaxAggregateInputType = {
     id?: true
     name?: true
+    desc?: true
   }
 
   export type GroupCountAggregateInputType = {
     id?: true
     name?: true
+    desc?: true
     _all?: true
   }
 
@@ -2362,6 +2368,7 @@ export namespace Prisma {
   export type GroupGroupByOutputType = {
     id: number
     name: string
+    desc: string
     _count: GroupCountAggregateOutputType | null
     _avg: GroupAvgAggregateOutputType | null
     _sum: GroupSumAggregateOutputType | null
@@ -2386,6 +2393,7 @@ export namespace Prisma {
   export type GroupSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    desc?: boolean
     users?: boolean | Group$usersArgs<ExtArgs>
     _count?: boolean | GroupCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["group"]>
@@ -2393,19 +2401,22 @@ export namespace Prisma {
   export type GroupSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    desc?: boolean
   }, ExtArgs["result"]["group"]>
 
   export type GroupSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    desc?: boolean
   }, ExtArgs["result"]["group"]>
 
   export type GroupSelectScalar = {
     id?: boolean
     name?: boolean
+    desc?: boolean
   }
 
-  export type GroupOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["group"]>
+  export type GroupOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "desc", ExtArgs["result"]["group"]>
   export type GroupInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Group$usersArgs<ExtArgs>
     _count?: boolean | GroupCountOutputTypeDefaultArgs<ExtArgs>
@@ -2421,6 +2432,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+      desc: string
     }, ExtArgs["result"]["group"]>
     composites: {}
   }
@@ -2847,6 +2859,7 @@ export namespace Prisma {
   interface GroupFieldRefs {
     readonly id: FieldRef<"Group", 'Int'>
     readonly name: FieldRef<"Group", 'String'>
+    readonly desc: FieldRef<"Group", 'String'>
   }
     
 
@@ -4394,7 +4407,8 @@ export namespace Prisma {
 
   export const GroupScalarFieldEnum: {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    desc: 'desc'
   };
 
   export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
@@ -4532,12 +4546,14 @@ export namespace Prisma {
     NOT?: GroupWhereInput | GroupWhereInput[]
     id?: IntFilter<"Group"> | number
     name?: StringFilter<"Group"> | string
+    desc?: StringFilter<"Group"> | string
     users?: UserGroupListRelationFilter
   }
 
   export type GroupOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    desc?: SortOrder
     users?: UserGroupOrderByRelationAggregateInput
   }
 
@@ -4547,12 +4563,14 @@ export namespace Prisma {
     OR?: GroupWhereInput[]
     NOT?: GroupWhereInput | GroupWhereInput[]
     name?: StringFilter<"Group"> | string
+    desc?: StringFilter<"Group"> | string
     users?: UserGroupListRelationFilter
   }, "id">
 
   export type GroupOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    desc?: SortOrder
     _count?: GroupCountOrderByAggregateInput
     _avg?: GroupAvgOrderByAggregateInput
     _max?: GroupMaxOrderByAggregateInput
@@ -4566,6 +4584,7 @@ export namespace Prisma {
     NOT?: GroupScalarWhereWithAggregatesInput | GroupScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Group"> | number
     name?: StringWithAggregatesFilter<"Group"> | string
+    desc?: StringWithAggregatesFilter<"Group"> | string
   }
 
   export type UserGroupWhereInput = {
@@ -4666,38 +4685,45 @@ export namespace Prisma {
 
   export type GroupCreateInput = {
     name: string
+    desc: string
     users?: UserGroupCreateNestedManyWithoutGroupInput
   }
 
   export type GroupUncheckedCreateInput = {
     id?: number
     name: string
+    desc: string
     users?: UserGroupUncheckedCreateNestedManyWithoutGroupInput
   }
 
   export type GroupUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    desc?: StringFieldUpdateOperationsInput | string
     users?: UserGroupUpdateManyWithoutGroupNestedInput
   }
 
   export type GroupUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    desc?: StringFieldUpdateOperationsInput | string
     users?: UserGroupUncheckedUpdateManyWithoutGroupNestedInput
   }
 
   export type GroupCreateManyInput = {
     id?: number
     name: string
+    desc: string
   }
 
   export type GroupUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    desc?: StringFieldUpdateOperationsInput | string
   }
 
   export type GroupUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    desc?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserGroupCreateInput = {
@@ -4836,6 +4862,7 @@ export namespace Prisma {
   export type GroupCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    desc?: SortOrder
   }
 
   export type GroupAvgOrderByAggregateInput = {
@@ -4845,11 +4872,13 @@ export namespace Prisma {
   export type GroupMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    desc?: SortOrder
   }
 
   export type GroupMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    desc?: SortOrder
   }
 
   export type GroupSumOrderByAggregateInput = {
@@ -5185,11 +5214,13 @@ export namespace Prisma {
 
   export type GroupCreateWithoutUsersInput = {
     name: string
+    desc: string
   }
 
   export type GroupUncheckedCreateWithoutUsersInput = {
     id?: number
     name: string
+    desc: string
   }
 
   export type GroupCreateOrConnectWithoutUsersInput = {
@@ -5234,11 +5265,13 @@ export namespace Prisma {
 
   export type GroupUpdateWithoutUsersInput = {
     name?: StringFieldUpdateOperationsInput | string
+    desc?: StringFieldUpdateOperationsInput | string
   }
 
   export type GroupUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    desc?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserGroupCreateManyUserInput = {

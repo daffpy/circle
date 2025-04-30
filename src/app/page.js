@@ -1,7 +1,5 @@
-import prisma from "@/lib/db";
-import { cookies } from "next/headers";
 import { retrieveSessionData } from "@/lib/session";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function Home() {
   const data = await retrieveSessionData()
@@ -15,9 +13,21 @@ export default async function Home() {
           <div>({data.email})</div>
 
         </div>
-        <div className="p-3 mt-5 border">
-          CREATE GROUP
-        </div>
+        <Link href="/group/create">
+          <div className="p-3 mt-5 border">
+            CREATE GROUP
+          </div>
+        </Link>
+        <Link href="/group/view">
+          <div className="p-3 mt-5 border">
+            VIEW GROUP
+          </div>
+        </Link>
+        <Link href="/group">
+          <div className="p-3 mt-5 border">
+            SEARCH GROUP
+          </div>
+        </Link>
 
         </div>
 
