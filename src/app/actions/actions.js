@@ -32,10 +32,23 @@ export async function register(params){
 
 export async function createGroup(params){
     await prisma.$transaction(async (prisma) => {
+        let tag = await prisma.tag.findFirst({
+          where:{
+            name: params.get('tag')
+          }
+        })
+        if(tag === null){
+          tag = await prisma.tag.create({
+            data:{
+              name: params.get('tag')
+            }
+          })
+        }
+        
         const newGroup = await prisma.group.create({
           data: {
             name: params.get('name'),
-            desc: params.get('desc')
+            desc: params.get('desc'),
           },
         });
       
@@ -45,6 +58,13 @@ export async function createGroup(params){
             groupId: newGroup.id,
           },
         });
+
+        await prisma.tagGroup.create({
+          data:{
+            tagId: tag.id,
+            groupId: newGroup.id
+          }
+        })
       
         return newGroup;
     });
@@ -57,4 +77,35 @@ export async function joinGroup(uid,gid){
       groupId: gid
     }
   })
+}
+
+export async function searchGroup(tagName) {
+  const tag = await prisma.tag.findFirst({
+    where: {
+      name: tagName
+    }
+  });
+
+  if (!tag) {
+    return null;
+  }
+
+  const tagGroups = await prisma.tagGroup.findMany({
+    where: {
+      tagId: tag.id
+    },
+    include: {
+      group: {
+        include: {
+          users: {
+            include: {
+              user: true
+            }
+          }
+        }
+      }
+    }
+  });
+
+  return tagGroups.map(tg => tg.group);
 }

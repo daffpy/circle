@@ -28,6 +28,8 @@ model Group {
   name  String
   desc  String
   users UserGroup[] // Relation to UserGroup
+
+  tags TagGroup[]
 }
 
 model UserGroup {
@@ -38,4 +40,20 @@ model UserGroup {
   group Group @relation(fields: [groupId], references: [id])
 
   @@id([userId, groupId]) // Composite primary key
+}
+
+model Tag {
+  id     Int        @id @default(autoincrement())
+  name   String
+  groups TagGroup[]
+}
+
+model TagGroup {
+  tagId   Int
+  groupId Int
+
+  tag   Tag   @relation(fields: [tagId], references: [id])
+  group Group @relation(fields: [groupId], references: [id])
+
+  @@id([tagId, groupId])
 }

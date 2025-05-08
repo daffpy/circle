@@ -140,6 +140,16 @@ exports.Prisma.UserGroupScalarFieldEnum = {
   groupId: 'groupId'
 };
 
+exports.Prisma.TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.TagGroupScalarFieldEnum = {
+  tagId: 'tagId',
+  groupId: 'groupId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -154,7 +164,9 @@ exports.Prisma.QueryMode = {
 exports.Prisma.ModelName = {
   User: 'User',
   Group: 'Group',
-  UserGroup: 'UserGroup'
+  UserGroup: 'UserGroup',
+  Tag: 'Tag',
+  TagGroup: 'TagGroup'
 };
 
 /**
