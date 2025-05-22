@@ -70,17 +70,6 @@ export async function register(params){
   if (pw.length > 20){
     errorObj.password = "password must be under 20 characters";
   }
-
-    const existingUser = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
-
-    if (existingUser){
-      errorObj.email = "email already registered";
-    }
-
     console.log(errorObj);
 
     if (Object.keys(errorObj). length !== 0){
@@ -121,10 +110,6 @@ export async function createGroup(params) {
 
   if (!tag || tag.trim() === "") {
     errorObj.tag = "Tag is required";
-  }
-
-  if (!userId || isNaN(parseInt(userId))) {
-    errorObj.id = "Owner ID is invalid";
   }
 
   if (Object.keys(errorObj).length > 0) {
@@ -171,7 +156,6 @@ export async function createGroup(params) {
     return newGroup;
   });
 
-  redirect('/group'); // Redirect to wherever you want after success
 }
 
 export async function searchGroup(tagName) {
@@ -195,7 +179,7 @@ export async function searchGroup(tagName) {
   if (!tag) {
     errorObj.search = "No groups found with this tag.";
     const encodedErrors = encodeURIComponent(JSON.stringify(errorObj));
-    return redirect(`/searchGroup?error=${encodedErrors}`);
+    return null;
   }
 
   const tagGroups = await prisma.tagGroup.findMany({
