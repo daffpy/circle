@@ -42,6 +42,40 @@ export async function login(params) {
 }
 
 export async function register(params){
+
+  const name = params.get("name");
+  const email = params.get("email");
+  const pw = params.get("password");
+
+  let errorObj = {};
+
+  if (!name || name.trim() === ""){
+    errorObj.name = "name is required";
+  }
+  if (!email.includes("@binus.ac.id")){
+    errorObj.email = "email must be a binusian email (@binus.ac.id)";
+  }
+  if (pw.length > 20){
+    errorObj.password = "password must be under 20 characters";
+  }
+
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (existingUser){
+      errorObj.email = "email already registered";
+    }
+
+    console.log(errorObj);
+
+    if (Object.keys(errorObj). length !== 0){
+      const encodedErrors = encodeURIComponent(JSON.stringify(errorObj));
+      redirect(`/register?error=${encodedErrors}`);
+    }
+
     await prisma.user.create({
         data:{
             name: params.get("name"),
@@ -50,7 +84,11 @@ export async function register(params){
         }
     })
 
+
+
     redirect('/login')
+
+
 }
 
 export async function createGroup(params){
