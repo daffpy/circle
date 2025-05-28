@@ -1,6 +1,5 @@
 import { login } from "../actions/actions"
 import Link from "next/link"
-import {listErrorLogin} from "@/scripts/utility"
 
 export default async function LoginPage({searchParams}){
     let error = {};
