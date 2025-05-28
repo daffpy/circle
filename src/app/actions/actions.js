@@ -5,9 +5,32 @@ import { createSession, decrypt } from "@/lib/session"
 import { redirect } from 'next/navigation'
 
 export async function login(params) {
+
+  const email = params.get("email")
+  const pw = params.get("password")
+
+  let errorObj = {}
+
+  if(!email.includes("@binus.ac.id")){
+    errorObj.email = "email must be a binusian email (@binus.ac.id)"
+  }
+  if(pw.length > 20){
+    errorObj.password = "password must be under 20"
+  }
+
+  console.log(errorObj)
+
+
+  if(errorObj != {}){
+    const encodedErrors = encodeURIComponent(JSON.stringify(errorObj));
+    redirect (`/login?error=${encodedErrors}`);
+  }
+
+
     const user = await prisma.user.findUnique({
         where:{
-            email: params.get("email")
+            email: email
+
         }
     })
 
