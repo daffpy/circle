@@ -1,5 +1,5 @@
 import { retrieveSessionData } from "@/lib/session"
-import ViewGroup from "@/component/View"
+import { DisplayBasicGroup } from "@/component/View"
 import {getGroupData} from "@/scripts/utility"
 
 export default async function GroupPage(){
@@ -8,9 +8,9 @@ export default async function GroupPage(){
     const groups = await getGroupData()
     
     return <div className="h-screen flex items-center justify-center">
-        <div className="grid grid-cols-3 gap-3 items-stretch">
+        <div className="flex gap-x-5">
             {groups.map((g,idx) => (
-                <ViewGroup key={idx} group={g} join={true} sessionData={data}/>
+                <DisplayBasicGroup key={idx} group={g} sessionData={data}/>
 
             ))}
         </div>

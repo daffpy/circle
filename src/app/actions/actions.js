@@ -49,7 +49,7 @@ export async function login(params) {
   }
 
   await createSession(user.id);
-  return redirect('/');
+  return redirect('/home');
 }
 
 
@@ -70,7 +70,6 @@ export async function register(params){
   if (pw.length > 20){
     errorObj.password = "password must be under 20 characters";
   }
-    console.log(errorObj);
 
     if (Object.keys(errorObj). length !== 0){
       const encodedErrors = encodeURIComponent(JSON.stringify(errorObj));
@@ -96,6 +95,8 @@ export async function createGroup(params) {
   const name = params.get("name");
   const desc = params.get("desc");
   const tag = params.get("tag");
+  const campus = params.get("campus");
+  const link = params.get("link");
   const userId = params.get("id");
 
   let errorObj = {};
@@ -114,7 +115,7 @@ export async function createGroup(params) {
 
   if (Object.keys(errorObj).length > 0) {
     const encodedErrors = encodeURIComponent(JSON.stringify(errorObj));
-    return redirect(`/createGroup?error=${encodedErrors}`);
+    return redirect(`/group/create?error=${encodedErrors}`);
   }
 
   await prisma.$transaction(async (prisma) => {
@@ -135,7 +136,10 @@ export async function createGroup(params) {
     const newGroup = await prisma.group.create({
       data: {
         name,
-        desc
+        desc,
+        campus,
+        link
+
       }
     });
 
@@ -167,7 +171,7 @@ export async function searchGroup(tagName) {
 
   if (Object.keys(errorObj).length > 0) {
     const encodedErrors = encodeURIComponent(JSON.stringify(errorObj));
-    return redirect(`/searchGroup?error=${encodedErrors}`);
+    return redirect(`/group/search?error=${encodedErrors}`);
   }
 
   const tag = await prisma.tag.findFirst({
@@ -177,8 +181,6 @@ export async function searchGroup(tagName) {
   });
 
   if (!tag) {
-    errorObj.search = "No groups found with this tag.";
-    const encodedErrors = encodeURIComponent(JSON.stringify(errorObj));
     return null;
   }
 
@@ -193,6 +195,11 @@ export async function searchGroup(tagName) {
             include: {
               user: true
             }
+          },
+          tags:{
+            include:{
+              tag:true
+            }
           }
         }
       }
@@ -202,4 +209,42 @@ export async function searchGroup(tagName) {
   return tagGroups.map(tg => tg.group);
 }
 
-export async function joinGroup(tagName){}
+export async function joinGroup(uid,gid){
+  await prisma.userGroup.create({
+    data:{
+      userId: uid,
+      groupId: gid
+    }
+  })
+}
+
+export async function leaveGroup(uid, gid){
+  await prisma.userGroup.delete({
+    where: {
+      userId_groupId: {
+        userId: uid,
+        groupId: gid,
+      },
+    },
+  });
+
+  const remainingMembers = await prisma.userGroup.count({
+    where: {
+      groupId: gid,
+    },
+  });
+
+  if (remainingMembers === 0) {
+    await prisma.tagGroup.deleteMany({
+      where: {
+        groupId: gid,
+      },
+    });
+
+    await prisma.group.delete({
+      where: {
+        id: gid,
+      },
+    });
+  }
+}

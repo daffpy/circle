@@ -1,9 +1,16 @@
+import prisma from "@/lib/db"
+
 export async function getGroupData(where = null){
     const query = {
         include:{
             users:{
                 include:{
                     user:true
+                }
+            },
+            tags:{
+                include:{
+                    tag:true
                 }
             }
         }
@@ -34,6 +41,11 @@ export async function getGroupDataByID(id){
                                     include:{
                                         user: true
                                     }
+                                },
+                                tags: {
+                                    include:{
+                                        tag: true
+                                    }
                                 }
                             }
                         }
@@ -42,5 +54,26 @@ export async function getGroupDataByID(id){
             }
         }
     )
+    return data
+}
+
+export async function getGroupDetailsById(id){
+    const data = await prisma.group.findFirst({
+        where: {
+            id: id
+        },
+        include: {
+            users: {
+                include: {
+                    user: true // this gets actual User data from the join table
+                }
+            },
+            tags: {
+                include:{
+                    tag: true
+                }
+            }
+        }
+    })
     return data
 }

@@ -1,3 +1,14 @@
+/*
+  Warnings:
+
+  - Added the required column `campus` to the `Group` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `link` to the `Group` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE "Group" ADD COLUMN     "campus" TEXT NOT NULL,
+ADD COLUMN     "link" TEXT NOT NULL;
+
 -- CreateTable
 CREATE TABLE "Tag" (
     "id" SERIAL NOT NULL,

@@ -28,7 +28,8 @@ model Group {
   name   String
   desc String
   users  UserGroup[]   // Relation to UserGroup
-
+  campus String
+  link String
   tags TagGroup[]
 }
 

@@ -44,7 +44,7 @@ export async function createSession(userId) {
 export async function retrieveSessionData(){
     const encryptedUserSession = (await cookies()).get('session')
     if (!encryptedUserSession) {
-      return redirect('/login');
+      return null;
     }
     const encryptedUser = encryptedUserSession.value
     const decryptedUser = await decrypt(encryptedUser)
@@ -54,4 +54,9 @@ export async function retrieveSessionData(){
       }
   })
   return data
+}
+
+export async function endSession(){
+  (await cookies()).delete("session")
+  return redirect("/login");
 }
