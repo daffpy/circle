@@ -14,12 +14,14 @@ const pacificoFont = Pacifico({
 
 const lexendFont = Lexend({
   variable: "--font-lexend",
-  weight:["400","600","900"]
+  weight:["400","600","900"],
+  subsets: ["latin"]
 })
 
 const archivoNFont = Archivo_Narrow({
   weight: ["600","700"],
-  variable: "--font-archivo"
+  variable: "--font-archivo",
+  subsets: ["latin"]
 })
 
 export default function RootLayout({ children }) {
